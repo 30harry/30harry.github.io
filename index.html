@@ -1,447 +1,570 @@
-<p>Selling the following games for pickup at Bottoscon (Fri/Sat/Sun)</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Syntax Checker</h1>
+    Only checks parenthesis '(' and ')' are matching for now, will add more checks later on (e.g. function names, arguments, etc.)
+    <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+    <button onclick="checkSyntax()">Check Syntax</button>
+    <div id="result"></div>
 
-<p>Note that 'some' bundles marked (BUNDLE ONLY) can't be broken up as expansions may be mixed in<br>
-</p>
+    
+    <h1>General Syntax Notes</h1><ul>
+        <li>A rule is comprised of Functions, Variables and Constants</li>
+        <li>Some of the functions are contextual</li>
+    </ul>
 
-<p>BUNDLED WARGAMES<br>
-    ----------------<br>
-    878 Vikings: Invasions of England $100 CAD with 23% discount (was $130 CAD) (BUNDLE ONLY) <br>
-    -- 878 Vikings: Invasions of England (2017) [NM/UP] $90 CAD<br>
-    -- 878 Vikings: Event Card Expansion Pack (2017) [NM/UP] $10 CAD<br>
-    -- 878 Vikings: Invasions of England &ndash; Viking Age Expansion (2017) [NM/UP] $30 CAD</p>
-    
-    <p>Air $60 CAD <br>
-    -- Air Strike (1987) [NM/PU] $20 CAD<br>
-    -- Air Superiority (1987) [NM/PU] $20 CAD<br>
-    -- The Speed of Heat (1992) [NM/PU] $20 CAD</p>
-    
-    <p>Axis Empires $100 CAD <br>
-    -- Axis Empires: Totaler Krieg! (2011) [NM/UP] $50 CAD<br>
-    -- Axis Empires: Dai Senso! &ndash; World War II in Asia &amp; the Pacific, 1937-45 (2011) [NM/UP] $50 CAD</p>
-    
-    <p>Band of Brothers $140 CAD (BUNDLE ONLY) <br>
-    -- Band of Brothers: Battle Manual (2016) [NM/PU] $20 CAD<br>
-    -- Band of Brothers: Ghost Panzer (2013) [NM/PU] $40 CAD<br>
-    -- Band of Brothers: Screaming Eagles (2011) [NM/PU] $40 CAD<br>
-    -- Band of Brothers: Texas Arrows (2016) [NM/PU] $40 CAD</p>
-    
-    <p>BattleLore $234 CAD with 10% discount (was $260 CAD) (BUNDLE ONLY) <br>
-    -- BattleLore (2006) [NM/PU] $50 CAD<br>
-    -- BattleLore: Call to Arms (2007) [NM/PU] $10 CAD<br>
-    -- BattleLore: Dwarven Battalion Specialist Pack (2007) [NM/PU] $30 CAD<br>
-    -- BattleLore: Epic BattleLore (2007) [NM/PU] $10 CAD<br>
-    -- BattleLore: Goblin Marauders Specialist Pack (2007) [NM/PU] $30 CAD<br>
-    -- BattleLore: Goblin Skirmishers Specialist Pack (2007) [NM/PU] $30 CAD<br>
-    -- BattleLore: Scottish Wars (2007) [NM/PU] $40 CAD<br>
-    -- BattleLore: The Hundred Years' War &ndash; Crossbows &amp; Polearms (2007) [NM/PU] $60 CAD</p>
-    
-    <p>Birth of America $135 CAD with 10% discount (was $150 CAD) <br>
-    -- 1775: Rebellion (2013) [NM/PU] $90 CAD<br>
-    -- 1812: The Invasion of Canada (2012) [NM/PU] $60 CAD</p>
-    
-    <p>Bitter Woods Deluxe Edition $160 CAD <br>
-    -- Bitter Woods Deluxe Edition (2003) [NM/PU] $100 CAD<br>
-    -- Bitter Woods Deluxe Edition Expansion Kit (2004) [NM/PU] $60 CAD</p>
-    
-    <p>CSS $380 CAD <br>
-    -- Saipan: The Bloody Rock (2017) [NM/UP] $180 CAD<br>
-    -- Tinian: The Forgotten Battle (2019) [NM/UP] $100 CAD<br>
-    -- Guam: Return to Glory (2017) [NM/UP] $100 CAD</p>
-    
-    <p>Civilization $315 CAD <br>
-    -- Civilization (1980) [NM/PU] $50 CAD<br>
-    -- Advanced Civilization (1991) [NM/UP] $150 CAD<br>
-    -- Civilization: Expansion Trade Cards Set (1982) [NM/PU] $40 CAD<br>
-    -- Civilization: West Extension Map (1986) [NM/PU] $75 CAD</p>
-    
-    <p>Close Action $200 CAD (BUNDLE ONLY) <br>
-    -- Close Action: The Age of Fighting Sail Vol. 1 (1997) [NM/PU] $100 CAD<br>
-    -- Monsoon Seas: Naval Warfare in the South Atlantic and Indian Oceans, 1777-1783 (2007) [NM/PU] $50 CAD<br>
-    -- Rebel Seas: The British Navy at Bay Part I (2002) [NM/PU] $50 CAD</p>
-    
-    <p>Combat Commander $530 CAD (BUNDLE ONLY) <br>
-    -- Combat Commander: Battle Pack #1 &ndash; Paratroopers (2007) [NM/PU] $30 CAD<br>
-    -- Combat Commander: Battle Pack #2 &ndash; Stalingrad (2008) [NM/PU] $20 CAD<br>
-    -- Combat Commander: Battle Pack #3 &ndash; Normandy (2010) [NM/PU] $20 CAD<br>
-    -- Combat Commander: Battle Pack #4 &ndash; New Guinea (2011) [NM/PU] $20 CAD<br>
-    -- Combat Commander: Battle Pack #5 &ndash; Fall of the West (2013) [NM/PU] $20 CAD<br>
-    -- Combat Commander: Battle Pack #6 &ndash; Sea Lion (2014) [NM/PU] $20 CAD<br>
-    -- Combat Commander: Battle Pack #7 &ndash; Leader of Men: Tournament Battle Pack (2015) [NM/PU] $20 CAD<br>
-    -- Combat Commander: Europe (2006) [NM/PU] $100 CAD<br>
-    -- Combat Commander: Mediterranean (2007) [NM/PU] $100 CAD<br>
-    -- Combat Commander: Pacific (2008) [NM/PU] $100 CAD<br>
-    -- Combat Commander: Resistance! (2011) [NM/PU] $80 CAD</p>
-    
-    <p>Downtown $340 CAD <br>
-    -- Downtown: Air War Over Hanoi, 1965-1972 (2004) [NM/PU] $250 CAD<br>
-    -- Elusive Victory: The Air War over the Suez Canal, 1967-1973 (2009) [NM/SW] $90 CAD</p>
-    
-    <p>Fast Action Battles $80 CAD <br>
-    -- FAB: The Bulge (2008) [NM/PU] $40 CAD<br>
-    -- FAB: Sicily (2011) [NM/UP] $40 CAD</p>
-    
-    <p>Field Commander $100 CAD <br>
-    -- Field Commander: Alexander (2009) [NM/PU] $20 CAD<br>
-    -- Field Commander: Napoleon (2011) [NM/PU] $60 CAD<br>
-    -- Field Commander: Rommel (2008) [NM/PU] $20 CAD</p>
-    
-    <p>Flying Colors $180 CAD with 10% discount (was $200 CAD) (BUNDLE ONLY) <br>
-    -- Flying Colors (2003) [NM/PU] $50 CAD<br>
-    -- Flying Colors: Ship of the Line (2009) [NM/PU] $10 CAD<br>
-    -- Serpents of the Seas (2010) [NM/PU] $140 CAD</p>
-    
-    <p>GTS $650 CAD <br>
-    -- The Greatest Day: Sword, Juno, and Gold Beaches (2015) [NM/PP] $200 CAD<br>
-    -- Where Eagles Dare: The Battle for Hell's Highway (2011) [NM/UP] $200 CAD<br>
-    -- The Devil's Cauldron: The Battles for Arnhem and Nijmegen (2008) [NM/PU] $250 CAD</p>
-    
-    <p>Great War Commander $120 CAD <br>
-    -- Great War Commander (2018) [NM/UP] $60 CAD<br>
-    -- Great War Commander: British Expeditionary Force (2020) [NM/PU] $60 CAD</p>
-    
-    <p>Liberty Roads $200 CAD <br>
-    -- Liberty Roads (2009) [NM/UP] $150 CAD<br>
-    -- Roundhammer 1943 (2011) [NM/UP] $50 CAD</p>
-    
-    <p>Nations at War $80 CAD <br>
-    -- Nations at War: Desert Heat (2013) [NM/UP] $40 CAD<br>
-    -- Nations at War: White Star Rising (2010) [NM/PU] $40 CAD</p>
-    
-    <p>No Retreat! $210 CAD <br>
-    -- No Retreat! Italian Front: 1943-45 (2015) [NM/UP] $50 CAD<br>
-    -- No Retreat!: Polish &amp; French Fronts (2018) [NM/UP] $50 CAD<br>
-    -- No Retreat!: Solitaire (2011) [NM/PU] $10 CAD<br>
-    -- No Retreat!: The North African Front (2013) [NM/UP] $50 CAD<br>
-    -- No Retreat! The Russian Front (2011) [NM/PU] $50 CAD</p>
-    
-    <p>Nuklear Winter '68 $100 CAD <br>
-    -- Nuklear Winter '68 (2012) [NM/UP] $40 CAD<br>
-    -- Nuklear Winter '68: Heart Of Darkness (2014) [NM/UP] $60 CAD</p>
-    
-    <p>Quartermaster General $80 CAD <br>
-    -- Quartermaster General (2014) [NM/PU] $40 CAD<br>
-    -- Quartermaster General: Air Marshal (2015) [NM/UP] $20 CAD<br>
-    -- Quartermaster General: Prelude (2018) [NM/UP] $20 CAD</p>
-    
-    <p>Ranger $400 CAD <br>
-    -- Ranger (2009) [NM/UP] $200 CAD<br>
-    -- Ranger: AO Sierra Expansion Kit (1993) [NM/UP] $100 CAD<br>
-    -- Ranger: AO Victor Expansion Kit (1993) [NM/UP] $100 CAD</p>
-    
-    <p>SCS $594 CAD with 10% discount (was $660 CAD) <br>
-    -- Stalingrad Pocket: 2nd Edition &ndash; The Wehrmacht's Greatest Disaster (1996) [NM/UP] $100 CAD<br>
-    -- Ardennes (1994) [NM/PU] $20 CAD (SALE PENDING)<br>
-    -- Autumn For Barbarossa (2017) [NM/PU] $30 CAD<br>
-    -- Bastogne: Screaming Eagles Under Siege 18-27 Dec '44 (2009) [NM/UP] $40 CAD (SALE PENDING)<br>
-    -- Day of Days: The Invasion of Normandy 1944 (2015) [NM/UP] $50 CAD<br>
-    -- Fallschirmjaeger: The Airborne Assault on Fortress Holland (2001) [NM/UP] $180 CAD<br>
-    -- It Never Snows (2012) [NM/UP] $100 CAD<br>
-    -- The Mighty Endeavor (2005) [NM/PU] $40 CAD<br>
-    -- Panzer Battles: 11th Panzer on the Chir River (2016) [NM/UP] $40 CAD<br>
-    -- Rostov '41: Race to the Don (2020) [NM/UP] $60 CAD</p>
-    
-    <p>Silent War $80 CAD <br>
-    -- Silent War (2005) [NM/PU] $50 CAD<br>
-    -- Silent War: IJN &ndash; Imperial Japanese Navy (2010) [NM/UP] $30 CAD</p>
-    
-    <p>Sword of Rome $60 CAD (BUNDLE ONLY) <br>
-    -- Sword of Rome: Conquest of Italy, 362-272 BC (2004) [NM/PU] $50 CAD<br>
-    -- The Sword of Rome: 5th Player Expansion (2007) [NM/PU] $10 CAD</p>
-    
-    <p>The Russian Campaign $200 CAD <br>
-    -- The Russian Campaign (1974) [NM/PU] $20 CAD<br>
-    -- The Russian Campaign: 4th edition (2003) [NM/PU] $80 CAD<br>
-    -- The Russian Campaign: Southern Expansion Kit (2004) [NM/PU] $100 CAD</p>
-    
-    <p>Third Reich $290 CAD <br>
-    -- Rise and Decline of the Third Reich (1974) [NM/PU] $30 CAD<br>
-    -- Advanced Third Reich (1992) [NM/UP] $80 CAD<br>
-    -- A World at War: Second World War in Europe and the Pacific (2003) [NM/UP] $100 CAD<br>
-    -- Empire of the Rising Sun (1995) [NM/UP] $80 CAD</p>
-    
-    <p>War at Sea $60 CAD <br>
-    -- War at Sea (Second Edition) (1976) [NM/PU] $30 CAD<br>
-    -- Victory in the Pacific (1977) [NM/PU] $30 CAD</p>
-    
-    <p>World Engulfed $100 CAD <br>
-    -- Asia Engulfed (2007) [NM/UP] $50 CAD<br>
-    -- Europe Engulfed: WWII European Theatre Block Game (2003) [NM/PU] $50 CAD</p>
-    
-    <p>World at War $100 CAD <br>
-    -- World at War: Blood and Bridges (2008) [NM/PU] $50 CAD<br>
-    -- World at War: Eisenbach Gap (2007) [NM/PU] $50 CAD</p>
-    
-    <p>
-    INDIVIDUAL WARGAMES<br>
-    -------------------<br>
-    1960: The Making of the President (2007) [NM/PU] $50 CAD<br>
-    1989: Dawn of Freedom (2012) [NM/UP] $50 CAD<br>
-    Attack in the Ardennes: The Battle of the Bulge (1982) [NM/PU] $10 CAD<br>
-    Balance of Powers (2015) [NM/PU] $60 CAD<br>
-    Battle Cry (1999) [NM/PU] $50 CAD<br>
-    Battle for China (1999) [NM/UP] $20 CAD<br>
-    The Battle of the Bulge (1981) [NM/PU] $30 CAD<br>
-    Bitter End: Attack to Budapest, 1945 (1983) [NM/UP] $60 CAD<br>
-    Bonaparte at Marengo (2003) [NM/UP] $150 CAD<br>
-    Britannia (1986) [NM/PU] $40 CAD<br>
-    The Burning Blue: The Battle of Britain, 1940 (2006) [NM/UP] $100 CAD<br>
-    Central America (1987) [NM/PU] $10 CAD<br>
-    The Civil War 1861-1865 (1983) [VG/50%] $50 CAD (SALE PENDING)<br>
-    Clash of Sovereigns: The War of the Austrian Succession, 1740-48 (2023) [NM/SW] $40 CAD<br>
-    Codeword Cromwell: The German Invasion of England, 8 June 1940 (2014) [NM/PU] $300 CAD<br>
-    Decision at Elst: An Advanced Squad Leader Starter Kit Historical Module (2014) [NM/UP] $300 CAD<br>
-    The Drive on Metz (Second Edition) (2008) [NM/PU] $30 CAD<br>
-    Fields of Despair: France 1914-1918 (2017) [NM/UP] $60 CAD<br>
-    Flat Top (1977) [NM/PU] $30 CAD<br>
-    Flight Leader (1986) [NM/PU] $20 CAD<br>
-    For the People (1998) [NM/UP] $60 CAD<br>
-    The Guns of Gettysburg (2013) [NM/PU] $100 CAD<br>
-    Hell's Highway: Operation Market Garden (1983) [NM/PU] $40 CAD (SALE PENDING)<br>
-    Here I Stand: 500th Anniversary Edition (2017) [NM/PU] $100 CAD<br>
-    Heroes of Normandie (2014) [NM/PU] $40 CAD<br>
-    The Kaiser's Pirates (2007) [NM/PU] $50 CAD<br>
-    The Korean War: June 1950-May 1951 (1986) [NM/PU] $30 CAD<br>
-    The Lamps are Going Out: World War I (2016) [NM/PU] $40 CAD<br>
-    The Legend Begins: North Africa, 1940-42 (1991) [NM/PU] $30 CAD<br>
-    The Longest Day (1979) [NM/10 counters] $400 CAD<br>
-    Manoeuvre (2008) [NM/PU] $40 CAD<br>
-    Napoleon's Triumph (2007) [NM/PU] $400 CAD<br>
-    The Napoleonic Wars (Second Edition) (2008) [NM/UP] $200 CAD<br>
-    Operation Dauntless: The Battles for Fontenay and Rauray, France, June 1944 (2016) [NM/UP] $50 CAD<br>
-    Pacific War: The Struggle Against Japan 1941-1945 (1985) [NM/PU] $30 CAD<br>
-    Pericles: The Peloponnesian Wars (2017) [NM/PU] $50 CAD<br>
-    Red Star Rising: The War in Russia, 1941-1944 (2007) [NM/UP] $50 CAD<br>
-    Red Winter: The Soviet Attack at Tolvaj&auml;rvi, Finland &ndash; 8-12 December 1939 (2012) [NM/UP] $50 CAD<br>
-    Russian Front (1985) [NM/PU] $30 CAD<br>
-    Sergeants D-Day (2014) [NM/PU] $50 CAD<br>
-    Streets of Stalingrad (Third Edition) (2003) [NM/UP] $400 CAD<br>
-    Successors: The Battles for Alexander's Empire (2008) [NM/UP] $50 CAD<br>
-    The U.S. Civil War (2015) [NM/UP] $70 CAD<br>
-    Unhappy King Charles! (2008) [NM/UP] $50 CAD<br>
-    Versailles 1919 (2020) [NM/SW] $50 CAD<br>
-    Vietnam 1965-1975 (1984) [NM/PU] $30 CAD<br>
-    Where There Is Discord: War in the South Atlantic (2009) [NM/PU] $400 CAD<br>
-    Wooden Ships &amp; Iron Men (1974) [NM/PU] $20 CAD<br>
-    World in Flames (1985) [NM/UP] $50 CAD</p>
-    
-    <p>
-    BUNDLED GAMES<br>
-    -------------<br>
-    Agricola $95 CAD <br>
-    -- Agricola (2007) [NM/PU] $50 CAD<br>
-    -- Agricola: All Creatures Big and Small (2012) [NM/PU] $30 CAD<br>
-    -- Agricola: All Creatures Big and Small &ndash; Even More Buildings Big and Small (2013) [NM/PU] $15 CAD</p>
-    
-    <p>Android: Netrunner $117 CAD with 10% discount (was $130 CAD) (BUNDLE ONLY) <br>
-    -- Android: Netrunner (2012) [NM/PU] $40 CAD<br>
-    -- Android: Netrunner &ndash; A Study in Static (2013) [NM/PU] $15 CAD<br>
-    -- Android: Netrunner &ndash; Cyber Exodus (2013) [NM/PU] $15 CAD<br>
-    -- Android: Netrunner &ndash; Future Proof (2013) [NM/PU] $15 CAD<br>
-    -- Android: Netrunner &ndash; Humanity's Shadow (2013) [NM/PU] $15 CAD<br>
-    -- Android: Netrunner &ndash; Trace Amount (2013) [NM/UP] $15 CAD<br>
-    -- Android: Netrunner &ndash; What Lies Ahead (2012) [NM/UP] $15 CAD</p>
-    
-    <p>Blood Bowl (2016 Edition) $240 CAD <br>
-    -- Blood Bowl (2016 Edition) (2016) [NM/UP] $80 CAD<br>
-    -- Blood Bowl (2016 Edition): The Dwarf Giants &ndash; Dwarf Blood Bowl Team (2017) [NM/UP] $40 CAD<br>
-    -- Blood Bowl (2016 Edition): The Gouged Eye &ndash; Orc Blood Bowl Team (2017) [NM/UP] $40 CAD<br>
-    -- Blood Bowl (2016 edition): The Reikland Reavers &ndash; Human Blood Bowl Team (2017) [NM/UP] $40 CAD<br>
-    -- Blood Bowl (2016 Edition): The Skavenblight Scramblers &ndash; Skaven Blood Bowl Team (2016) [NM/UP] $40 CAD</p>
-    
-    <p>Blue Moon $50 CAD with 10% discount (was $55 CAD) (BUNDLE ONLY) <br>
-    -- Blue Moon (2004) [NM/PU] $10 CAD<br>
-    -- Blue Moon: Buka Invasion (2006) [NM/PU] $5 CAD<br>
-    -- Blue Moon: Emissaries &amp; Inquisitors &ndash; Allies (2005) [NM/PU] $5 CAD<br>
-    -- Blue Moon: Emissaries &amp; Inquisitors &ndash; Blessings (2005) [NM/PU] $5 CAD<br>
-    -- Blue Moon: The Aqua (2005) [NM/PU] $5 CAD<br>
-    -- Blue Moon: The Flit (2004) [NM/PU] $5 CAD<br>
-    -- Blue Moon: The Khind (2004) [NM/PU] $5 CAD<br>
-    -- Blue Moon: The Mimix (2004) [NM/PU] $5 CAD<br>
-    -- Blue Moon: The Pillar (2005) [NM/PU] $5 CAD<br>
-    -- Blue Moon: The Terrah (2004) [NM/PU] $5 CAD</p>
-    
-    <p>Chaos in the Old World $550 CAD (BUNDLE ONLY) <br>
-    -- Chaos in the Old World (2009) [NM/PU] $250 CAD<br>
-    -- Chaos in the Old World: The Horned Rat Expansion (2011) [NM/PU] $300 CAD</p>
-    
-    <p>Clank!: A Deck-Building Adventure $60 CAD (BUNDLE ONLY) <br>
-    -- Clank!: A Deck-Building Adventure (2016) [NM/PU] $40 CAD<br>
-    -- Clank!: Sunken Treasures (2017) [NM/UP] $10 CAD<br>
-    -- Clank!: The Mummy's Curse (2018) [NM/UP] $10 CAD</p>
-    
-    <p>Cosmic Encounter $70 CAD (BUNDLE ONLY) <br>
-    -- Cosmic Encounter (2008) [NM/PU] $30 CAD<br>
-    -- Cosmic Encounter: Cosmic Conflict (2011) [NM/PU] $20 CAD<br>
-    -- Cosmic Encounter: Cosmic Incursion (2010) [NM/PU] $20 CAD</p>
-    
-    <p>Deep Space D-6 $50 CAD <br>
-    -- Deep Space D-6 (2015) [NM/PU] $20 CAD<br>
-    -- Deep Space D-6: The Endless (2018) [NM/PU] $10 CAD<br>
-    -- Deep Space D-6: Armada (2021) [NM/UP] $20 CAD</p>
-    
-    <p>Dungeons &amp; Dragons $120 CAD <br>
-    -- Dungeons &amp; Dragons: Castle Ravenloft Board Game (2010) [NM/PU] $40 CAD<br>
-    -- Dungeons &amp; Dragons: The Legend of Drizzt Board Game (2011) [NM/PU] $40 CAD<br>
-    -- Dungeons &amp; Dragons: Wrath of Ashardalon Board Game (2011) [NM/PU] $40 CAD</p>
-    
-    <p>Gloom $50 CAD (BUNDLE ONLY) <br>
-    -- Cthulhu Gloom (2011) [NM/PU] $10 CAD<br>
-    -- Gloom (2005) [NM/PU] $10 CAD<br>
-    -- Gloom: Unwelcome Guests (2007) [NM/PU] $10 CAD<br>
-    -- Gloom: Unfortunate Expeditions (2009) [NM/PU] $10 CAD<br>
-    -- Gloom: Unhappy Homes (2005) [NM/PU] $10 CAD</p>
-    
-    <p>Gloomhaven $210 CAD <br>
-    -- Gloomhaven (2017) [NM/PU] $150 CAD<br>
-    -- Gloomhaven: Forgotten Circles (2019) [NM/UP] $50 CAD<br>
-    -- Gloomhaven: Solo Scenarios (2017) [NM/PU] $10 CAD</p>
-    
-    <p>High Frontier $80 CAD <br>
-    -- High Frontier (2010) [NM/PU] $60 CAD<br>
-    -- High Frontier Colonization (2013) [NM/PU] $20 CAD</p>
-    
-    <p>King of Tokyo $30 CAD (BUNDLE ONLY) <br>
-    -- King of Tokyo (2011) [NM/PU] $25 CAD (SALE PENDING)<br>
-    -- King of Tokyo: Power Up! (2012) [NM/PU] $5 CAD (SALE PENDING)</p>
-    
-    <p>Pathfinder Adventure Card Game: Rise of the Runelords $70 CAD (BUNDLE ONLY) <br>
-    -- Pathfinder Adventure Card Game: Rise of the Runelords &ndash; Adventure Deck 2: The Skinsaw Murders (2013) [NM/PU] $10 CAD<br>
-    -- Pathfinder Adventure Card Game: Rise of the Runelords &ndash; Base Set (2013) [NM/PU] $40 CAD<br>
-    -- Pathfinder Adventure Card Game: Rise of the Runelords &ndash; Character Add-On Deck (2013) [NM/PU] $10 CAD<br>
-    -- Pathfinder Adventure Card Game: Rise of the Runelords &ndash; Adventure Deck 3: The Hook Mountain Massacre (2013) [NM/PU] $10 CAD</p>
-    
-    <p>Star Realms $30 CAD <br>
-    -- Star Realms (2014) [NM/PU] $10 CAD<br>
-    -- Star Realms: Frontiers (2018) [NM/PU] $20 CAD</p>
-    
-    <p>Star Trek: Fleet Captains $280 CAD <br>
-    -- Star Trek: Fleet Captains (2011) [NM/PU] $80 CAD<br>
-    -- Star Trek: Fleet Captains &ndash; Dominion (2014) [NM/PU] $80 CAD<br>
-    -- Star Trek: Fleet Captains &ndash; Romulan Empire (2012) [NM/PU] $120 CAD</p>
-    
-    <p>Star Wars: X-Wing Miniatures Game $505 CAD (BUNDLE ONLY) <br>
-    -- Star Wars: X-Wing Miniatures Game (2012) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game (2012) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; A-Wing Expansion Pack (2013) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; E-Wing Expansion Pack (2014) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; HWK-290 Expansion Pack (2013) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; Lambda-class Shuttle Expansion Pack (2013) [NM/PU] $70 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; TIE Advanced Expansion Pack (2012) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; Z-95 Headhunter Expansion Pack (2014) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; Y-Wing Expansion Pack (2012) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; X-Wing Expansion Pack (2012) [NM/PU] $30 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; TIE Phantom Expansion Pack (2014) [NM/PU] $30 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; TIE Interceptor Expansion Pack (2013) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; TIE Fighter Expansion Pack (2012) [NM/PU] $20 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; TIE Defender Expansion Pack (2014) [NM/PU] $25 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; TIE Bomber Expansion Pack (2013) [NM/PU] $30 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; Millennium Falcon Expansion Pack (2013) [NM/PU] $50 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; Slave I Expansion Pack (2013) [NM/PU] $50 CAD<br>
-    -- Star Wars: X-Wing Miniatures Game &ndash; B-Wing Expansion Pack (2013) [NM/PU] $20 CAD</p>
-    
-    <p>The Lord of the Rings: The Card Game $423 CAD with 10% discount (was $470 CAD) (BUNDLE ONLY) <br>
-    -- The Lord of the Rings: The Card Game (2011) [NM/PU] $20 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; Encounter at Amon D&icirc;n (2013) [NM/PU] $20 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; Khazad-d&ucirc;m (2011) [NM/PU] $60 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; Return to Mirkwood (2011) [NM/PU] $40 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; Road to Rivendell (2012) [NM/PU] $40 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; The Hills of Emyn Muil (2011) [NM/PU] $40 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; The Hunt for Gollum (2011) [NM/PU] $40 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; The Watcher in the Water (2012) [NM/PU] $60 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; The Redhorn Gate (2012) [NM/PU] $30 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; The Massing at Osgiliath (2011) [NM/PU] $60 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; The Dead Marshes (2011) [NM/PU] $20 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; Conflict at the Carrock (2011) [NM/PU] $10 CAD<br>
-    -- The Lord of the Rings: The Card Game &ndash; A Journey to Rhosgobel (2011) [NM/PU] $30 CAD</p>
-    
-    <p>Warhammer $450 CAD (BUNDLE ONLY) <br>
-    -- Warhammer 40,000: Battle for Macragge (2004) [NM/PU] $200 CAD<br>
-    -- Warhammer: Battle For Skull Pass (2006) [NM/PU] $250 CAD</p>
-    
-    <p>Warhammer Underworlds: Nightvault $470 CAD (BUNDLE ONLY) <br>
-    -- Warhammer Underworlds: Nightvault (2018) [NM/PU] $80 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Forbidden Chambers Board Pack (2019) [NM/PU] $20 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Garrek&rsquo;s Reavers (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Godsworn Hunt (2019) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Mirrored City Boards Pack (2018) [NM/PU] $20 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Steelheart&rsquo;s Champions (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; The Eyes of the Nine (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Zarbag's Gitz (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Mollog's Mob (2019) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Ylthari's Guardians (2019) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Thundrik's Profiteers (2019) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Nightvault &ndash; Echoes of Glory (2018) [NM/PU] $30 CAD</p>
-    
-    <p>Warhammer Underworlds: Shadespire $360 CAD (BUNDLE ONLY) <br>
-    -- Warhammer Underworlds: Shadespire (2017) [NM/PU] $80 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; Ironskull's Boyz (2017) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; Leaders (2018) [NM/PU] $20 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; Magore's Fiends (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; Sepulchral Guard (2017) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; Shattered City Board Pack (2018) [NM/PU] $20 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; Spiteclaw's Swarm (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; The Chosen Axes (2018) [NM/PU] $40 CAD<br>
-    -- Warhammer Underworlds: Shadespire &ndash; The Farstriders (2018) [NM/PU] $40 CAD</p>
-    
-    <p>Zombicide $90 CAD (BUNDLE ONLY) <br>
-    -- Zombicide (2012) [NM/PU] $50 CAD<br>
-    -- Zombicide: Box of Zombies &ndash; Set #1: Walk of the Dead (2013) [NM/PU] $10 CAD<br>
-    -- Zombicide Season 2: Prison Outbreak (2013) [NM/PU] $30 CAD</p>
-    
-    <p>
-    INDIVIDUAL GAMES<br>
-    ----------------<br>
-    Age of Empires III: The Age of Discovery (2007) [NM/PU] $60 CAD<br>
-    Azul (2017) [NM/PU] $40 CAD<br>
-    BANG! (2002) [NM/PU] $10 CAD<br>
-    Battlestar Galactica: The Board Game (2008) [NM/PU] $200 CAD<br>
-    Blood Bowl: Team Manager &ndash; The Card Game (2011) [NM/PU] $50 CAD<br>
-    Bohnanza (1997) [NM/PU] $5 CAD<br>
-    Carcassonne (2000) [NM/PU] $10 CAD<br>
-    CATAN (1995) [NM/PU] $10 CAD<br>
-    Catan Card Game (1996) [NM/PU] $10 CAD<br>
-    Catan: Junior (2011) [NM/PU] $10 CAD<br>
-    Citadels (2000) [NM/PU] $20 CAD<br>
-    The Crew: The Quest for Planet Nine (2019) [NM/PU] $20 CAD<br>
-    D-Day Dice (2012) [NM/PU] $30 CAD<br>
-    Defenders of the Realm (2010) [NM/PU] $60 CAD<br>
-    Doctor Who: The Card Game (2012) [NM/PU] $20 CAD<br>
-    Dominant Species (2010) [NM/PU] $50 CAD<br>
-    Dominion: Intrigue (2009) [NM/PU] $20 CAD<br>
-    Dungeon Twister (2004) [NM/PU] $20 CAD<br>
-    Earth Reborn (2010) [NM/PU] $60 CAD<br>
-    Firefly: The Game (2013) [NM/PU] $40 CAD<br>
-    Flash Point: Fire Rescue (2011) [NM/PU] $40 CAD<br>
-    Forbidden Stars (2015) [NM/PU] $300 CAD<br>
-    Gears of War: The Board Game (2011) [NM/PU] $120 CAD<br>
-    Ghost Stories (2008) [NM/PU] $50 CAD<br>
-    Guillotine (1998) [NM/PU] $10 CAD<br>
-    Gunslinger (1982) [NM/PU] $90 CAD<br>
-    Hansa (2004) [NM/PU] $20 CAD (SALE PENDING)<br>
-    Harry Potter: Hogwarts Battle &ndash; Defence Against the Dark Arts (2019) [NM/PU] $20 CAD<br>
-    HeroQuest (1989) [NM/PU] $100 CAD<br>
-    Hive (2001) [NM/PU] $10 CAD<br>
-    KeyForge: Call of the Archons (2018) [NM/PU] $20 CAD<br>
-    Lord of the Rings: The Confrontation (2005) [NM/PU] $100 CAD<br>
-    Lost Cities (1999) [NM/PU] $20 CAD<br>
-    Love Letter (2012) [NM/PU] $10 CAD<br>
-    Mechs vs. Minions (2016) [NM/PU] $250 CAD<br>
-    Middle-Earth Quest (2009) [NM/PU] $150 CAD<br>
-    Mr. Jack (2006) [NM/PU] $20 CAD<br>
-    My First Carcassonne (2009) [NM/PU] $10 CAD<br>
-    Onirim (Second Edition) (2014) [NM/PU] $10 CAD<br>
-    The Quacks of Quedlinburg (2018) [NM/PU] $50 CAD<br>
-    Quoridor (1997) [NM/PU] $20 CAD<br>
-    Rex: Final Days of an Empire (2012) [NM/UP] $40 CAD<br>
-    RoboRally (1994) [NM/PU] $30 CAD<br>
-    Ruse and Bruise (2006) [NM/PU] $10 CAD<br>
-    San Juan (2004) [NM/PU] $30 CAD<br>
-    Santorini (2016) [NM/PU] $30 CAD<br>
-    Small World (2009) [NM/PU] $40 CAD<br>
-    Space Hulk (Third Edition) (2009) [NM/PU] $350 CAD<br>
-    Stone Age (2008) [NM/PU] $30 CAD<br>
-    Summoner Wars: Master Set (2011) [NM/PU] $60 CAD<br>
-    Through the Desert (2005) [NM/PU] $20 CAD<br>
-    Ticket to Ride (2004) [NM/PU] $30 CAD<br>
-    Warhammer Quest (1995) [NM/PU] $800 CAD<br>
-    Warhammer Quest: Blackstone Fortress (2018) [NM/UP] $150 CAD</p>
+    <h1>How to use temps</h1>
+    Temps allow you to reuse parts of the rule and also make things more readable
+    <ul>
+        <li>Declare a temp variable with an expression: <b>$[name]( ... )</b>, e.g. <b>$fred(COUNT(HAND))</b> </li>
+        <li>Use a temp variable: <b>$[name]</b>, e.g. <b>$fred</b></li>
+        <li>Example rule: <b>$types(ANY(ELF,HUMAN,KOBOLD))</b>, IF(EQ(TYPE_STAT(OPP_CARD),<b>$types</b>), ADDSUB(3))</li>
+    </ul>
+
+    <h1>Variables</h1>
+    <ul><li>Variables either contain results of functions, constants or game specific variables</li>
+    <li></li></ul>
+    <table>
+        <tr>
+            <th>Name(s)</th>
+            <th>Example(s)</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>ARMOR</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is an ARMOR clash, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>ATTACKER</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if attacker, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>ATTACKER_CARD, ATT_CARD, ATTACK_CARD</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Attackers card</td>
+        </tr>
+        <tr>
+            <td>ATTACKER_HAND, ATT_HAND, ATTACK_HAND</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the attackers hand</td>
+        </tr>
+        <tr>
+            <td>ATTACKER_RESERVES, ATT_RESERVES, ATTACK_RESERVES</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the attackers reserves</td>
+        </tr>
+        <tr>
+            <td>ATTACKER_STAT</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Get's the attackers current modified stat for the clash</td>
+        </tr>
+        <tr>
+            <td>YOUR_CARD, PLAYER_CARD</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Players card</td>
+        </tr>
+        <tr>
+            <td>DEFENDER</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if defender, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>DEFENDER_CARD, DEFEND_CARD, DEF_CARD</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Defenders card</td>
+        </tr>
+        <tr>
+            <td>DEFENDER_HAND, DEF_HAND, DEFEND_HAND</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the defenders hand</td>
+        </tr>
+        <tr>
+            <td>DEFENDER_RESERVES, DEF_RESERVES, DEFEND_RESERVES</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the defenders reserves</td>
+        </tr>
+        <tr>
+            <td>DEFENDER_STAT</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Get's the defenders current modified stat for the clash</td>
+        </tr>
+        <tr>
+            <td>HEALTH</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is an HEALTH clash, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>HIGH</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is a HIGH clash, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>LOW</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is a LOW clash, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>OPP_CARD, OPPONENT_CARD</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Opponent's card</td>
+        </tr>
+        <tr>
+            <td>OPP_HAND, OPPONENT_HAND</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the opponents hand</td>
+        </tr>
+        <tr>
+            <td>OPP_RESERVES, OPPONENT_RESERVES</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the opponents reserves</td>
+        </tr>
+        <tr>
+            <td>OPPONENT_STAT</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Get's the opponents current modified stat for the clash</td>
+        </tr>
+        <tr>
+            <td>PLAYER_STAT</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>Get's the players current modified stat for the clash</td>
+        </tr>
+        <tr>
+            <td>PLAYER_HAND, YOUR_HAND</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the players hand</td>
+        </tr>
+        <tr>
+            <td>PLAYER_RESERVES, YOUR_RESERVES</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Cards in the players reserves</td>
+        </tr>
+        <tr>
+            <td>POWER</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is an POWER clash, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>SPEED</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is an SPEED clash, otherwise FALSE</td>
+        </tr>
+        <tr>
+            <td>TYPE</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>TRUE if this is an TYPE clash, otherwise FALSE</td>
+        </tr>
+    </table>
+
+    <h1>Functions</h1>
+    <ul>
+        <li>To call a function, use the function name followed by the arguments in parentheses, e.g. <b>ADD(3, 4), WINS()</b></li>
+        <li>You can also call some functions without parameters by ommitting the parentheses, e.g. <b>WINS</b></li>
+        <li>Some functions can take a variable number of arguments, e.g. <b>ANY(ELF, HUMAN, KOBOLD)</b></li>
+        <li>Some functions are contextual, but have a default parameter based on the player of the card, e.g. <b>ADD(2)</b> is the same as <b>ADD(PLAYER_STAT,2)</b> but not the same as <b>ADD(OPPONENT_STAT,2)</b></li>
+    </ul>
+    <table>
+        <tr>
+            <th>Name(s)</th>
+            <th>Example(s)</th>
+            <th>Parameter(s)</th>
+            <th>Result(s)</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>ACTIVE_STAT, ACTIVE_STATS</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>Row 1, Cell 4</td>
+            <td>Returns the active stat for the current card, or the specified card(s)</td>
+        </tr>
+        <tr>
+            <td>ARMOR_STAT, ARMOR_STATS</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>Row 1, Cell 4</td>
+            <td>Returns the ARMOR stat for the current card, or the specified card(s)</td>
+        </tr>
+        <tr>
+            <td>_, EVAL, ANY, ALL, EACH, BOTH, WHERE, EITHER, THEN, ELSE</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>Row 1, Cell 4</td>
+            <td>Simply combines multiple expressions</td>
+        </tr>
+        <tr>
+            <td>ADD</td>
+            <td>
+                <li>ADD(2) <ul><li>adds 2 to the player stat</li></ul></li>
+                <li>ADD(2,4) <ul><li>returns 6</li></ul></li>
+                <li>ADD(ADD(2,4)) <ul><li>adds 6 to the player stat</li></ul></li>
+                <li>ADD(COUNT(HAND)) <ul><li>adds number of cards in player hand to the player stat</li></ul></li>
+                <li>ADD(2,OPP_STAT) or ADD(OPP_STAT,2) <ul><li>adds 2 to the opponent stat</li></li>
+            </td>
+            <td>A:numeric, B:numeric</td>
+            <td>numeric</td>
+            <td><ul>
+                <li>Adds two numerics together and returns the result.</li>
+                <li>The default second parameter is the PLAYER_STAT</li>
+                <li><b>[Side-effect]</b> If either of the parameters is the player/opponent stat, then the stat is modified also</li></ul></td>
+        </tr>
+        <tr>
+            <td>ADDSUB, ADD_SUB, ADD_SUBTRACT,ADDSUBTRACT</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:numeric, B:numeric</td>
+            <td>numeric</td>
+            <td><ul>
+                <li>Adds two numerics together if the current test is HIGH, otherwise subtracts the second from the first, and returns the result.</li>
+                <li>The default first parameter is the PLAYER_STAT</li>
+                <li><b>[Side-effect]</b> If either of the parameters is the player/opponent stat, then the stat is modified also</li></ul></td>
+        </tr>
+        <tr>
+            <td>AND</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:boolean or list or boolean</td>
+            <td>boolean</td>
+            <td>Returns TRUE if all of the items are TRUE</td>
+        </tr>
+        <tr>
+            <td>CARD</td>
+            <td><li>CARD</li><li>CARD(PLAYER)</li><li>CARD(OPPONENT)</li><li>CARD(DEFENDER)</li><li>CARD(ATTACKER)</td>
+            <td>A:boolean (default is TRUE)</td>
+            <td>numeric</td>
+            <td>Get's the players card if TRUE otherwise the opponents</td>
+        </tr>
+        <tr>
+            <td>CLASHES_LOST, LOSSES, LOST</td>
+            <td><li>LOST</li><li>LOST()</li><li>LOST(PLAYER)</li><li>LOST(OPPONENT)</li><li>LOST(ATTACKER)</li><li>LOST(DEFENDER)</td>
+            <td>Row 2, Cell 3</td>
+            <td>numeric</td>
+            <td>Returns number of clashes lost this game. </td>
+        </tr>
+        <tr>
+            <td>CLASHES_WON, WINS, WON</td>
+            <td><li>WON</li><li>WON()</li><li>WON(PLAYER)</li><li>WON(OPPONENT)</li><li>WON(ATTACKER)</li><li>WON(DEFENDER)</td>
+            <td>Row 2, Cell 3</td>
+            <td>numeric</td>
+            <td>Returns number of clashes won this game. </td>
+        </tr>
+        <tr>
+            <td>COUNT</td>
+            <td><li>COUNT(HAND)</li><li>COUNT(RESERVES)</li><li>COUNT(ANY(ELF,WIZARD))</li></td>
+            <td>Row 2, Cell 3</td>
+            <td>numeric</td>
+            <td>Counts the number items</td>
+        </tr>
+        <tr>
+            <td>EQ</td>
+            <td><li>EQ(TRUE,TRUE)</li><li>EQ(TRUE,FALSE)</li><li>EQ(TYPE_STAT(HAND),ELF)</li><li>COUNT(EQ(TYPE_STAT(HAND),ANY(ELF,WIZARD)))</li></td>
+            <td>A:numeric, cards or list or numerics, B:numeric</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is equal to B.  If A is a list, then returns all the items in A that equal B </td>
+        </tr>
+        <tr>
+            <td>EVEN</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is even.  If A is a list, then returns all the items in A that are even </td>
+        </tr>
+        <tr>
+            <td>FLIP_TEST</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>none</td>
+            <td>changes test from high to low, or low to high</td>
+        </tr>
+        <tr>
+            <td>GT</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics, B:numeric</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is greater than B.  If A is a list, then returns all the items in A that are greater than B </td>
+        </tr>
+        <tr>
+            <td>GTE</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics, B:numeric</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is greater than or equal to B.  If A is a list, then returns all the items in A that are greater than or equal to B </td>
+        </tr>
+        <tr>
+            <td>HAND</td>
+            <td><li>HAND</li><li>HAND(PLAYER)</li><li>HAND(OPPONENT)</li><li>HAND(DEFENDER)</li><li>HAND(ATTACKER)</td>
+            <td>A:boolean (default is TRUE)</td>
+            <td>numeric</td>
+            <td>Get's the players hand if TRUE otherwise the opponents</td>
+        </tr>
+        <tr>
+            <td>HEALTH_STAT, HEALTH_STATS</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>numeric</td>
+            <td>Returns the HEALTH stat for the current card, or the specified card(s)</td>
+        </tr>
+        <tr>
+            <td>IF</td>
+            <td><li>IF(HIGH,ADD(1),SUB(1))</li>
+                <li>IF(AND(POWER,HIGH) ,ADD(1),SUB(1))</li>
+                <li>IF(OR(POWER,SPEED), ADD(1),SUB(1))</li>
+                <li>IF(AND(HIGH,OR(POWER,SPEED)), ADD(1),SUB(1))</li></td>
+            <td>A:boolean, B:expression, C:expression (optional)</td>
+            <td>depends on the expression evaluated</td>
+            <td>If A is TRUE then evaluate and return B, otherwise evaluate and return C</td>
+        </tr>
+        <tr>
+            <td>LT</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics, B:numeric</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is less than B.  If A is a list, then returns all the items in A that are less than B </td>
+        </tr>
+        <tr>
+            <td>LTE</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics, B:numeric</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is less than or equal to B.  If A is a list, then returns all the items in A that are less than or equal to B </td>
+        </tr>
+        <tr>
+            <td>MAX</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:numeric, B:numeric</td>
+            <td>numeric</td>
+            <td>Returns the larger value of A or B</td>
+        </tr>
+        <tr>
+            <td>MIN</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:numeric, B:numeric</td>
+            <td>numeric</td>
+            <td>Returns the smallest value of A or B</td>
+        </tr>
+        <tr>
+            <td>MOVE</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:source card(s), B:target</td>
+            <td>Row 2, Cell 4</td>
+            <td>Moves cards from source to target; currently supports RESERVES(PLAYER|OPP|DEF|ATT) and HAND(PLAYER|OPP|DEF|ATT)</td>
+        </tr>
+        <tr>
+            <td>MUL, MULTIPLY</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:numeric, B:numeric</td>
+            <td>numeric</td>
+            <td><ul>
+                <li>Multiplies two numerics together and returns the result.</li>
+                <li>The default second parameter is the PLAYER_STAT</li>
+                <li><b>[Side-effect]</b> If either of the parameters is the player/opponent stat, then the stat is modified also</li></ul></td>
+        </tr>
+        <tr>
+            <td>NE</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics, B:numeric</td>
+            <td>boolean or list</td>
+            <td>Returns TRUE if A is not equal to B.  If A is a list, then returns all the items in A that are not equal B </td>
+        </tr>
+        <tr>
+            <td>NOT</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:boolean</td>
+            <td>boolean</td>
+            <td>Returns TRUE if A is FALSE</td>
+        </tr>
+        <tr>
+            <td>ODD</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:numeric or list or numerics</td>
+            <td>boolean</td>
+            <td>Returns TRUE if A is odd.  If A is a list, then returns all the items in A that are odd </td>
+        </tr>
+        <tr>
+            <td>OR</td>
+            <td>Row 1, Cell 2</td>
+            <td>A:boolean or list or boolean</td>
+            <td>boolean</td>
+            <td>Returns TRUE if any of the items are TRUE</td>
+        </tr>
+        <tr>
+            <td>POWER_STAT, POWER_STATS</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>numeric</td>
+            <td>Returns the POWER stat for the current card, or the specified card(s)</td>
+        </tr>
+        <tr>
+            <td>PREV_WINNER, PREV_CLASH_WINNER, WON_PREV_CLASH, WON_LAST_CLASH</td>
+            <td><li>PREV_WINNER</li><li>PREV_WINNER(OPPONENT)</li><li>PREV_CLASH_WINNER(ATTACKER)</td>
+            <td>A:boolean (default is TRUE)</td>
+            <td>boolean</td>
+            <td>TRUE if player lost the previous clash, else FALSE. If A is FALSE then we test the opponent</td>
+        </tr>
+        <tr>
+            <td>PREV_LOSER, PREV_CLASH_LOSER, LOST_PREV_CLASH, LOST_LAST_CLASH</td>
+            <td><li>PREV_LOSER</li><li>PREV_LOSER(OPPONENT)</li><li>PREV_CLASH_LOSER(ATTACKER)</td>
+            <td>A:boolean (default is TRUE)</td>
+            <td>boolean</td>
+            <td>TRUE if player lost the previous clash, else FALSE. If A is FALSE then we test the opponent</td>
+        </tr>
+        <tr>
+            <td>RAND, RANDOM, RANDOM_CARD, RANDOM_CARDS</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:list of cards, B:numeric</td>
+            <td>numeric</td>
+            <td>Used to select a random card from a list, if B is numeric it returns that number of cards</td>
+        </tr>
+        <tr>
+            <td>RESERVES</td>
+            <td><li>RESERVES</li><li>RESERVES(PLAYER)</li><li>RESERVES(OPPONENT)</li><li>RESERVES(DEFENDER)</li><li>RESERVES(ATTACKER)</td>
+            <td>A:boolean (default is TRUE)</td>
+            <td>numeric</td>
+            <td>Get's the players reserves if TRUE otherwise the opponents</td>
+        </tr>
+        <tr>
+            <td>REVEAL</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Row 2, Cell 4</td>
+            <td>Moves card(s) from private to public status</td>
+        </tr>
+        <tr>
+            <td>SPEED_STAT, SPEED_STATS</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>numeric</td>
+            <td>Returns the SPEED stat for the current card, or the specified card(s)</td>
+        </tr>
+        <tr>
+            <td>STAT</td>
+            <td><li>STAT</li><li>STAT(PLAYER)</li><li>STAT(OPPONENT)</li><li>STAT(DEFENDER)</li><li>STAT(ATTACKER)</td>
+            <td>A:boolean (default is TRUE)</td>
+            <td>numeric</td>
+            <td>Get's the players current modified stat for the clash if TRUE otherwise the opponents</td>
+        </tr>
+        <tr>
+            <td>SUB, SUBTRACT</td>
+            <td>Row 2, Cell 2</td>
+            <td>A:numeric, B:numeric</td>
+            <td>numeric</td>
+            <td><ul>
+                <li>Subtracts the second numeric from the first returns the result.</li>
+                <li>The default first parameter is the PLAYER_STAT</li>
+                <li><b>[Side-effect]</b> If either of the parameters is the player/opponent stat, then the stat is modified also</li></ul></td>
+        </tr>
+        <tr>
+            <td>TYPE_STAT, TYPE_STATS</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+            <td>type</td>
+            <td>Returns the TYPE stat for the current card, or the specified card(s)</td>
+        </tr>
+    </table>
+    <h1>Constants</h1><ul>
+        <li>-20, -19, ..., -1, 0, 1, ... 19, 20</li>
+        <li>TRUE, FALSE</li>
+        <li>An uppercase constant for all types in the card file, e.g. AVATAR, ... WIZARD</li>
+    </ul>
+
+
+    <script>
+        function checkNestedParentheses(input) {
+            const stack = [];
+            let i = 0;
+            for (let char of input) {
+                i ++;
+                if (char === '(') {
+                    stack.push(char);
+                } else if (char === ')') {
+                    if (stack.length === 0) {
+                        return i; // Unmatched closing parenthesis
+                    }
+                    stack.pop();
+                }
+            }
+            return (stack.length === 0) ? -1 : i; // True if all parentheses are matched
+        }
+
+        function checkSyntax() {
+            const inputText = document.getElementById('inputText').value;
+            const resultDiv = document.getElementById('result');
+
+            let errorAt = checkNestedParentheses(inputText);
+            if (errorAt !== -1) {
+                let errorTextLeft = inputText.substring(0, errorAt - 1);
+                let errorTextRight = inputText.substring(errorAt - 1);
+                resultDiv.textContent = 'Syntax error: Unmatched parentheses \"' + errorTextLeft + "^" + errorTextRight + "\"";
+                resultDiv.style.color = 'red';
+                return;
+            }
+
+            try {
+                //new Function(inputText);
+                resultDiv.textContent = 'Syntax is correct!';
+                resultDiv.style.color = 'green';
+            } catch (e) {
+                resultDiv.textContent = 'Syntax error: ' + e.message;
+                resultDiv.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
