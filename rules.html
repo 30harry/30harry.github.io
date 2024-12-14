@@ -285,6 +285,13 @@
             <td>Returns TRUE if all of the items are TRUE</td>
         </tr>
         <tr>
+            <td>BETTER, BEST</td>
+            <td>IF(NOT(TYPE),USE(BETTER(ACTIVE_STAT, SPEED_STAT)))</td>
+            <td>A:numeric B:numeric</td>
+            <td>numeric</td>
+            <td>Returns the lowest value if LOW and the highest value if HIGH</td>
+        </tr>
+        <tr>
             <td>CARD</td>
             <td><li>CARD</li><li>CARD(PLAYER)</li><li>CARD(OPPONENT)</li><li>CARD(DEFENDER)</li><li>CARD(ATTACKER)</td>
             <td>A:boolean (default is TRUE)</td>
@@ -480,6 +487,13 @@
             <td>Get's the players reserves if TRUE otherwise the opponents</td>
         </tr>
         <tr>
+            <td>REVEAL</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+            <td>Row 2, Cell 4</td>
+            <td>Moves card(s) from private to public status</td>
+        </tr>
+        <tr>
             <td>SPEED_STAT, SPEED_STATS</td>
             <td>Row 1, Cell 2</td>
             <td>Row 1, Cell 3</td>
@@ -509,6 +523,13 @@
             <td>Row 1, Cell 3</td>
             <td>type</td>
             <td>Returns the TYPE stat for the current card, or the specified card(s)</td>
+        </tr>
+        <tr>
+            <td>USE</td>
+            <td>IF(NOT(TYPE),IF(BETTER(SPEED_STAT,ACTIVE_STAT),USE(SPEED_STAT)))</td>
+            <td>A:targetStat (default is PLAYER), B:sourceStat</td>
+            <td>type</td>
+            <td>Replaces a players stat with the sourceStat</td>
         </tr>
     </table>
     <h1>Constants</h1><ul>
