@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Syntax Checker</h1>
+    Only checks parenthesis '(' and ')' are matching for now, will add more checks later on (e.g. function names, arguments, etc.)
+    <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+    <button onclick="checkSyntax()">Check Syntax</button>
+    <div id="result"></div>
+
+    
+    <h1>General Syntax Notes</h1><ul>
+        <li>A rule is comprised of Functions, Variables and Constants</li>
+        <li>Some of the functions are contextual</li>
+        <li>Functions can be called with and without parameters, for example:</li>
+
+        <ul>
+            <li>TYPE_STAT</li>
+            <li>TYPE_STAT(RESERVES)</li>
+            <li>ANY(ELF)</li>
+            <li>ANY(ELF,WIZARD)</li>
+            <li>ANY(ELF,WIZARD,IMP)</li>
+        </ul>
+        <li>Each rule can have multiple expressions.  Each expression is seperated by a comma:</li>
+        <ul>
+            <li>MOVE(RANDOM(HAND),RESERVES),MOVE(RANDOM(RESERVES),HAND) # move random card from hand to reserves, then move random card from reserves to hand</li>
+            <li>$h(RANDOM(HAND)),$r(RANDOM(RESERVES)),IF(AND(GT(COUNT($h),0),GT(COUNT($r),0)), MOVE($r,HAND), MOVE($h,RESERVES)) # if there's at least one card in the hand and reserves, swap them</li>
+        </ul>
+    </ul>
+
+    <h1>How to use temps</h1>
+    Temps allow you to reuse parts of the rule and also make things more readable
+    <ul>
+        <li>Declare a temp variable with an expression: <b>$[name]( ... )</b>, e.g. <b>$fred(COUNT(HAND))</b> </li>
+        <li>Use a temp variable: <b>$[name]</b>, e.g. <b>$fred</b></li>
+        <li>Example rule: <b>$types(ANY(ELF,HUMAN,KOBOLD))</b>, IF(EQ(TYPE_STAT(OPP_CARD),<b>$types</b>), ADDSUB(3))</li>
+    </ul>
+
+    <h1>Variables</h1>
+    <ul><li>Variables either contain results of functions, constants or game specific variables</li>
+    <li></li></ul>
+    <table>
+        <tr>
+        <th>Name(s)</th>
+        <th>Type</th>
+        <th>Description</th>
+        </tr>
+        <tr bgcolor="lightgrey">
+        <td>ATTACKER, ATT, ATTACK</td>
+        <td>Boolean</td>
+        <td>TRUE if the player is the ATTACKER, otherwise FALSE</td>
+        </tr>
+        <tr bgcolor="white">
+        <td>ATTACKER_HAND, ATTACK_HAND, ATT_HAND</td>
+        <td>List<Card></td>
+        <td>Returns attackers hand</td>
+        </tr>
+        <tr bgcolor="lightgrey">
+        <td>DEFENDER, DEF, DEFEND</td>
+        <td>Boolean</td>
+        <td>TRUE if the player is the DEFENDER, otherwise FALSE</td>
+        </tr>
+        <tr bgcolor="white">
+        <td>DEFENEDER_HAND, DEFEND_HAND, DEF_HAND</td>
+        <td>List<Card></td>
+        <td>Returns defenders hand</td>
+        </tr>
+        <tr bgcolor="lightgrey">
+        <td>OPPONENT_HAND, OPP_HAND</td>
+        <td>List<Card></td>
+        <td>Returns opponents hand</td>
+        </tr>
+        <tr bgcolor="white">
+        <td>PLAYER_HAND, YOUR_HAND</td>
+        <td>List<Card></td>
+        <td>Returns players hand</td>
+        </tr>
+        </table>
+
+    <h1>Functions</h1>
+    <ul>
+        <li>To call a function, use the function name followed by the arguments in parentheses, e.g. <b>ADD(3, 4), WINS()</b></li>
+        <li>You can also call some functions without parameters by ommitting the parentheses, e.g. <b>WINS</b></li>
+        <li>Some functions can take a variable number of arguments, e.g. <b>ANY(ELF, HUMAN, KOBOLD)</b></li>
+        <li>Some functions are contextual, but have a default parameter based on the player of the card, e.g. <b>ADD(2)</b> is the same as <b>ADD(PLAYER_STAT,2)</b> but not the same as <b>ADD(OPPONENT_STAT,2)</b></li>
+    </ul>
+    <table>
+        <tr>
+        <th>Name(s)</th>
+        <th>Return Type</th>
+        <th>Parameter Type(s)</th>
+        <th>Description</th>
+        </tr>
+        <tr bgcolor="lightgrey">
+        <td>ACTIVE_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>ACTIVE_STAT or ACTIVE_STAT() - Returns active stat from card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>ACTIVE_STAT(CARD) - Returns active stat from specified card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>ACTIVE_STAT(LIST) - Returns active stats from specified card(s)</td>
+        <tr bgcolor="white">
+        <td>ADD, SUM</td>
+        <td>Numeric</td>
+        <td>Numeric, Numeric</td>
+        <td>ADD(A,B) - returns A+B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>CardStat, Numeric</td>
+        <td>ADD(A) - modifies current stat and returns A+stat</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>CardStat, Numeric</td>
+        <td>ADD(A,B) - modifies stat A and returns A+B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>CardStat, CardStat</td>
+        <td>ADD(A,B) - modifies stat A and returns A+B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>Numeric</td>
+        <td>Numeric, CardStat</td>
+        <td>ADD(A,B) - returns A+B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>Numeric</td>
+        <td>List<Numeric></td>
+        <td>ADD(LIST) - returns sum of the list of numerics</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>Numeric</td>
+        <td>List<CardStat></td>
+        <td>ADD(LIST) - returns sum of the list of numeric card stats otherwise 0</td>
+        <tr bgcolor="lightgrey">
+        <td>ADDSUB</td>
+        <td>Numeric</td>
+        <td>Numeric, Numeric</td>
+        <td>ADDSUB(A,B) - returns A+B if the test if HIGH, otherwise A-B</td>
+        <tr bgcolor="white">
+        <td>ALLTRAITS, ALL_TRAITS, WITHALLTRAITS, WITH_ALL_TRAITS</td>
+        <td>List<Card></td>
+        <td>List<AnyType>, List<String></td>
+        <td>ALLTRAITS(LIST_A,LIST_T) - returns all cards in LIST_A that have all of traits in LIST_T</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<CardStat>, List<String></td>
+        <td>ALLTRAITS(LIST_A,LIST_T) - returns all stats in LIST_A that have all of traits in LIST_T</td>
+        <tr bgcolor="lightgrey">
+        <td>AND</td>
+        <td>Boolean</td>
+        <td>Boolean, OneOrMoreOfTheSame<Boolean></td>
+        <td>AND(A,B,...) - returns TRUE if all parameters are TRUE</td>
+        <tr bgcolor="white">
+        <td>ANYTRAITS, ANY_TRAITS, ANY_TRAIT, WITHTRAIT, WITH_TRAIT, WITHANYTRAITS, WITH_ANY_TRAITS</td>
+        <td>List<Card></td>
+        <td>List<Card>, String</td>
+        <td>WITH_TRAIT(LIST,T) - returns all cards in the list with the trait T</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<CardStat>, String</td>
+        <td>WITH_TRAIT(LIST,T) - returns all stats in the list with the trait T</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<Card></td>
+        <td>List<AnyType>, List<String></td>
+        <td>ANY_TRAITS(LIST_A,LIST_T) - returns all cards in LIST_A that have any of traits in LIST_T</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<CardStat>, List<String></td>
+        <td>ANY_TRAITS(LIST_A,LIST_T) - returns all stats in LIST_A that have any of traits in LIST_T</td>
+        <tr bgcolor="lightgrey">
+        <td>ARMOR_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>ARMOR_STAT or ARMOR_STAT() - Returns armor stat from card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>ARMOR_STAT(CARD) - Returns armor stat from specified card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>ARMOR_STAT(LIST) - Returns armor stats from specified card(s)</td>
+        <tr bgcolor="white">
+        <td>CARD</td>
+        <td>Card</td>
+        <td></td>
+        <td>CARD or CARD() - Returns players card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>Card</td>
+        <td>Boolean</td>
+        <td>CARD(PLAYER|OPPONENT|ATTACKER|DEFENDER) - Returns players card if TRUE otherwise opponents card</td>
+        <tr bgcolor="lightgrey">
+        <td>COUNT</td>
+        <td>Numeric</td>
+        <td>List<Numeric></td>
+        <td>COUNT(LIST) - returns the number of items in the list</td>
+        <tr bgcolor="white">
+        <td>EQ, EQUAL, EQUALS</td>
+        <td>Boolean</td>
+        <td>AnyType, AnyType</td>
+        <td>EQ(A,B) - returns TRUE if A == B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<AnyType></td>
+        <td>List<AnyType>, AnyType</td>
+        <td>EQ(LIST,A) - returns all items in the list == A</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<AnyType></td>
+        <td>List<AnyType>, List<AnyType></td>
+        <td>EQ(LIST_A,LIST_B) - returns all items in LIST_A that are also in LIST_B</td>
+        <tr bgcolor="lightgrey">
+        <td>EVEN</td>
+        <td>Boolean</td>
+        <td>Numeric</td>
+        <td>EVEN(A) - returns TRUE if A is an even number</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<Numeric></td>
+        <td>List<Numeric></td>
+        <td>EVEN(LIST) - returns all items that are even numbers</td>
+        <tr bgcolor="white">
+        <td>GT</td>
+        <td>Boolean</td>
+        <td>Numeric, Numeric</td>
+        <td>GT(A,B) - returns TRUE if A > B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<Numeric></td>
+        <td>List<Numeric>, Numeric</td>
+        <td>GT(LIST,A) - returns all items > A</td>
+        <tr bgcolor="lightgrey">
+        <td>GTE</td>
+        <td>Boolean</td>
+        <td>Numeric, Numeric</td>
+        <td>GTE(A,B) - returns TRUE if A >= B</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<Numeric></td>
+        <td>List<Numeric>, Numeric</td>
+        <td>GTE(LIST,A) - returns all items >= A</td>
+        <tr bgcolor="white">
+        <td>HAND</td>
+        <td>List<Card></td>
+        <td></td>
+        <td>HAND or HAND() - Returns players hand</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<Card></td>
+        <td>Boolean</td>
+        <td>HAND(PLAYER|OPPONENT|ATTACKER|DEFENDER) - Returns players hand if TRUE otherwise opponents hand</td>
+        <tr bgcolor="lightgrey">
+        <td>HAS_TRAIT, HAS_TRAITS, HASTRAIT, HASTRAITS</td>
+        <td>Boolean</td>
+        <td>CardStat, String</td>
+        <td>HAS_TRAIT(STAT,TRAIT) - Returns TRUE if stat has trait</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>Boolean</td>
+        <td>CardStat, List<String></td>
+        <td>HAS_TRAITS(STAT,LIST) - Returns TRUE if stat has all traits</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>Boolean</td>
+        <td>Card, String</td>
+        <td>HAS_TRAIT(CARD,TRAIT) - Returns TRUE if card has trait</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>Boolean</td>
+        <td>Card, List<String></td>
+        <td>HAS_TRAITS(CARD,LIST) - Returns TRUE if card has all traits</td>
+        <tr bgcolor="white">
+        <td>HEALTH_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>HEALTH_STAT or HEALTH_STAT() - Returns health stat from card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>HEALTH_STAT(CARD) - Returns health stat from specified card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>HEALTH_STAT(LIST) - Returns health stats from specified card(s)</td>
+        <tr bgcolor="lightgrey">
+        <td>IF</td>
+        <td>AnyType</td>
+        <td>Boolean, AnyType, AnyType</td>
+        <td>IF(COND,A,B) - Returns A if COND is TRUE otherwise returns B</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>AnyType</td>
+        <td>Boolean, AnyType</td>
+        <td>IF(COND,A) - Returns A if COND is TRUE</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>AnyType</td>
+        <td>List<AnyType>, AnyType, AnyType</td>
+        <td>IF(LIST,A,B) - Returns A if LIST is not empty otherwise returns B</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>AnyType</td>
+        <td>List<AnyType>, AnyType</td>
+        <td>IF(LIST,A) - Returns A if LIST is not empty</td>
+        <tr bgcolor="white">
+        <td>LIST, _, ANY, DO, ALL, COLLECT, COLLECTION, COMBINE, CONCAT, EACH, BOTH, WHERE, EITHER, THEN, ELSE, EVAL</td>
+        <td>List<AnyType></td>
+        <td>OneOrMoreOfTheSame<AnyType></td>
+        <td>LIST(A,...) - Combines all parameters into a list.</td>
+        <tr bgcolor="lightgrey">
+        <td>LOG</td>
+        <td>AnyType</td>
+        <td>OneOrMore<AnyType></td>
+        <td>LOG(A,...) - Logs results of all parameters and returns result of last</td>
+        <tr bgcolor="white">
+        <td>LT</td>
+        <td>Boolean</td>
+        <td>Numeric, Numeric</td>
+        <td>LT(A,B) - returns TRUE if A < B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<Numeric></td>
+        <td>List<Numeric>, Numeric</td>
+        <td>LT(LIST,A) - returns all items < A</td>
+        <tr bgcolor="lightgrey">
+        <td>LTE</td>
+        <td>Boolean</td>
+        <td>Numeric, Numeric</td>
+        <td>LTE(A,B) - returns TRUE if A <= B</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<Numeric></td>
+        <td>List<Numeric>, Numeric</td>
+        <td>LTE(LIST,A) - returns all items <= A</td>
+        <tr bgcolor="white">
+        <td>MAX</td>
+        <td>Numeric</td>
+        <td>Numeric, Numeric</td>
+        <td>MAX(A,B) - returns the largest number</td>
+        <tr bgcolor="lightgrey">
+        <td>MIN</td>
+        <td>Numeric</td>
+        <td>Numeric, Numeric</td>
+        <td>MIN(A,B) - returns the smallest number</td>
+        <tr bgcolor="white">
+        <td>MUL, MULTIPLY</td>
+        <td>Numeric</td>
+        <td>Numeric, Numeric</td>
+        <td>MUL(A,B) - returns A * B</td>
+        <tr bgcolor="lightgrey">
+        <td>NAME_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>NAME_STAT or NAME_STAT() - Returns name stat from card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>NAME_STAT(CARD) - Returns name stat from specified card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>NAME_STAT(LIST) - Returns name stats from specified card(s)</td>
+        <tr bgcolor="white">
+        <td>NE, NOTEQUAL, NOTEQUALS</td>
+        <td>Boolean</td>
+        <td>AnyType, AnyType</td>
+        <td>NE(A,B) - returns TRUE if A != B</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<AnyType></td>
+        <td>List<AnyType>, AnyType</td>
+        <td>NE(LIST,A) - returns all items in the list != A</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<AnyType></td>
+        <td>List<AnyType>, List<AnyType></td>
+        <td>NE(LIST_A,LIST_B) - returns all items in LIST_A that are not in LIST_B</td>
+        <tr bgcolor="lightgrey">
+        <td>NOT</td>
+        <td>Boolean</td>
+        <td>Boolean</td>
+        <td>NOT(A) - returns FALSE if A is TRUE otherwise FALSE</td>
+        <tr bgcolor="white">
+        <td>ODD</td>
+        <td>Boolean</td>
+        <td>Numeric</td>
+        <td>ODD(A) - returns TRUE if A is an odd number</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<Numeric></td>
+        <td>List<Numeric></td>
+        <td>ODD(LIST) - returns all items that are odd numbers</td>
+        <tr bgcolor="lightgrey">
+        <td>OR</td>
+        <td>Boolean</td>
+        <td>Boolean, OneOrMoreOfTheSame<Boolean></td>
+        <td>OR(A,B,...) - returns TRUE if any parameters are TRUE</td>
+        <tr bgcolor="white">
+        <td>POWER_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>POWER_STAT or POWER_STAT() - Returns power stat from card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>POWER_STAT(CARD) - Returns power stat from specified card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>POWER_STAT(LIST) - Returns power stats from specified card(s)</td>
+        <tr bgcolor="lightgrey">
+        <td>RANDOM, RAND</td>
+        <td>AnyType</td>
+        <td>List<AnyType>, Numeric</td>
+        <td>RANDOM(LIST,N) - Returns upto N random item(s) from a list</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>AnyType</td>
+        <td>List<AnyType></td>
+        <td>RANDOM(LIST) - Returns upto 1 random item from a list</td>
+        <tr bgcolor="white">
+        <td>SPEED_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>SPEED_STAT or SPEED_STAT() - Returns speed stat from card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>SPEED_STAT(CARD) - Returns speed stat from specified card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>SPEED_STAT(LIST) - Returns speed stats from specified card(s)</td>
+        <tr bgcolor="lightgrey">
+        <td>STRING, STR, RULE</td>
+        <td>String</td>
+        <td>String</td>
+        <td>STRING(A) - Creates a string i.e. does not resolve parameters</td>
+        <tr bgcolor="white">
+        <td>SUB, SUBTRACT</td>
+        <td>Numeric</td>
+        <td>Numeric, Numeric</td>
+        <td>SUB(A,B) - returns A-B</td>
+        <tr bgcolor="lightgrey">
+        <td>TRAITS</td>
+        <td>List<String></td>
+        <td></td>
+        <td>TRAITS or TRAITS() - Returns unique traits from card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<String></td>
+        <td>CardStat</td>
+        <td>TRAITS(STAT) - Returns unique traits from stat</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<String></td>
+        <td>Card</td>
+        <td>TRAITS(CARD) - Returns unique traits from specified card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<String></td>
+        <td>List<CardStat></td>
+        <td>TRAITS(LIST) - Returns unqiue traits from specified stat(s)</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<String></td>
+        <td>List<Card></td>
+        <td>TRAITS(LIST) - Returns unqiue traits from specified card(s)</td>
+        <tr bgcolor="white">
+        <td>TRAITS_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>TRAITS_STAT or TRAITS_STAT() - Returns traits stat from card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>TRAITS_STAT(CARD) - Returns traits stat from specified card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>TRAITS_STAT(LIST) - Returns traits stat from specified card(s)</td>
+        <tr bgcolor="lightgrey">
+        <td>TYPE_STAT</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>TYPE_STAT or TYPE_STAT() - Returns type stat from card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>TYPE_STAT(CARD) - Returns type stat from specified card</td>
+        <tr bgcolor="lightgrey">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>TYPE_STAT(LIST) - Returns type stats from specified card(s)</td>
+        <tr bgcolor="white">
+        <td>VPS, VICTORY_POINTS</td>
+        <td>CardStat</td>
+        <td></td>
+        <td>VPS or VPS() - Returns victory points from card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>CardStat</td>
+        <td>Card</td>
+        <td>VPS(CARD) - Returns victory points from specified card</td>
+        <tr bgcolor="white">
+        <td></td>
+        <td>List<CardStat></td>
+        <td>List<Card></td>
+        <td>VPS(LIST) - Returns victory points from specified card(s)</td>
+        <tr bgcolor="lightgrey">
+        <td>XOR</td>
+        <td>Boolean</td>
+        <td>Boolean, OneOrMoreOfTheSame<Boolean></td>
+        <td>XOR(A,B,...) - returns TRUE if only one of the parameters are TRUE</td>
+        </table>
+
+    <h1>Specific Constants</h1>
+    <table>
+        <tr>
+        <th>Name(s)</th>
+        <th>Type</th>
+        <th>Description</th>
+        </tr>
+        <tr bgcolor="lightgrey">
+        <td>OPPONENT, OPP</td>
+        <td>Boolean</td>
+        <td>TRUE if the opponent</td>
+        </tr>
+        <tr bgcolor="white">
+        <td>PLAYER</td>
+        <td>Boolean</td>
+        <td>TRUE if the player</td>
+        </tr>
+        </table>
+
+    <h1>Generic Constants</h1><ul>
+        <li>-20, -19, ..., -1, 0, 1, ... 19, 20</li>
+        <li>TRUE, FALSE</li>
+        <li>An uppercase constant for all types in the card file, e.g. AVATAR, ... WIZARD</li>
+    </ul>
+
+    <h1>Card file syntax (columns)</h1><ul>
+        <li>CARD TIMING: One of BC, CC, CT, CH, CA, MS, MR, RC</li>
+        <li>CARD SOURCE: One of "", "hand", "hand,played"</li>
+        <li>CARD RULES: expression(s) and/or comment (# the hash symbol starts a comment)</li>
+    </ul>
+
+    <h1>Clash phases</h1>
+    Card play in a clash is resolved in the following order (phases):
+    <ul>
+        <li>BC - Before Clash: e.g. change attacker</li>
+        <li>CC - Change Cards: e.g. change played cards</li>
+        <li>CT - Change Test: e.g. flip high/low</li>
+        <li>CH - Change Hand: e.g. move cards to and from hand or reserves</li>
+        <li>CA - Change Card Attribute: e.g. change original power stat regardless of test (can stack effects)</li>
+        <li>MS - Modify Stat: e.g. modify the current active stat</li>
+        <li>MR - Modify Result: e.g. change tie to win</li>
+        <li>RC - Resolve Clash: e.g. reward winner</li>
+    </ul>
+
+    Within each phase, the rules on cards are resolved in the following order where the Attacker calls the clash stat/test:
+    <ul>
+        <li>Attacker Player Effects (Cards add player effects using the ADDRULE function)</li>
+        <li>Defender Player Effects</li>
+        <li>Attacker Hand Effects (Cards with a source of 'hand' are revealed from the hand)</li>
+        <li>Defender Hand Effects</li>
+        <li>Attacker Card Effects (The final played card)</li>
+        <li>Defender Card Effects</li>
+    </ul>
+
+    <h1>In Game Console Commands</h1>
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>Parameters</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>MoveCardToHand</td>
+            <td>cardNumberOrName, Opponent: True or  False (default)</td>
+            <td>Move a card to the hand from anywhere</td>
+        </tr>
+        <tr>
+            <td>MoveCardToReserves</td>
+            <td>cardNumberOrName, Opponent: True or  False (default)</td>
+            <td>Move a card to the reserves from anywhere</td>
+        </tr>
+        <tr>
+            <td>MoveCardToDeck</td>
+            <td>cardNumberOrName</td>
+            <td>Move a card to the deck from anywhere</td>
+        </tr>
+    </table>
+
+    <h1>In Game Keyboard Shortcuts</h1>
+    
+    <table>
+        <tr>
+            <th>Key</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>B</td>
+            <td>cycle through backgrounds</td>
+        </tr>
+        <tr>
+            <td>Left Shift</td>
+            <td>display actual rules instead of 'english' rules</td>
+        </tr>
+    </table>
+
+    <script>
+        function checkNestedParentheses(input) {
+            const stack = [];
+            let i = 0;
+            for (let char of input) {
+                i ++;
+                if (char === '(') {
+                    stack.push(char);
+                } else if (char === ')') {
+                    if (stack.length === 0) {
+                        return i; // Unmatched closing parenthesis
+                    }
+                    stack.pop();
+                }
+            }
+            return (stack.length === 0) ? -1 : i; // True if all parentheses are matched
+        }
+
+        function checkSyntax() {
+            const inputText = document.getElementById('inputText').value;
+            const resultDiv = document.getElementById('result');
+
+            let errorAt = checkNestedParentheses(inputText);
+            if (errorAt !== -1) {
+                let errorTextLeft = inputText.substring(0, errorAt - 1);
+                let errorTextRight = inputText.substring(errorAt - 1);
+                resultDiv.textContent = 'Syntax error: Unmatched parentheses \"' + errorTextLeft + "^" + errorTextRight + "\"";
+                resultDiv.style.color = 'red';
+                return;
+            }
+
+            try {
+                //new Function(inputText);
+                resultDiv.textContent = 'Syntax is correct!';
+                resultDiv.style.color = 'green';
+            } catch (e) {
+                resultDiv.textContent = 'Syntax error: ' + e.message;
+                resultDiv.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
