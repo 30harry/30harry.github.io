@@ -98,34 +98,38 @@
     </ul>
 
     <h1>Card file syntax (columns)</h1><ul>
-        <li>CARD TIMING: One of BC, CC, CT, CH, CA, MS, MR, RC</li>
-        <li>CARD SOURCE: One of "", "hand", "hand,played"</li>
-        <li>CARD RULES: expression(s) and/or comment (# the hash symbol starts a comment)</li>
+        <li>CARD TIMING: One of GB, BC, CC, CT, CH, CMA, CA, MS, MR, RC, GE</li>
+        <li>CARD SOURCE: One of "", "reserves", "hand", "hand:played"</li>
+        <li>CARD RULES: expression(s) and/or comment (// the double forward slash symbol starts a comment)</li>
     </ul>
 
     <h1>Clash phases</h1>
     Card play in a clash is resolved in the following order (phases):
     <ul>
+        <li>GB - Before first Clash/li>
         <li>BC - Before Clash: e.g. change attacker</li>
         <li>CC - Change Cards: e.g. change played cards</li>
         <li>CT - Change Test: e.g. flip high/low</li>
         <li>CH - Change Hand: e.g. move cards to and from hand or reserves</li>
-        <li>CA - Change Card Attribute: e.g. change original power stat regardless of test (can stack effects)</li>
+        <li>CMA - Change Card Attribute for Match: e.g. change original power stat regardless of test (can stack effects)</li>
+        <li>CA - Change Card Attribute for Game: e.g. change original power stat regardless of test (can stack effects)</li>
         <li>MS - Modify Stat: e.g. modify the current active stat</li>
         <li>MR - Modify Result: e.g. change tie to win</li>
         <li>RC - Resolve Clash: e.g. reward winner</li>
+        <li>Ge - After final Clash/li>
     </ul>
 
     Within each phase, the rules on cards are resolved in the following order where the Attacker calls the clash stat/test:
     <ul>
         <li>Attacker Player Effects (Cards add player effects using the ADDRULE function)</li>
-        <li>Defender Player Effects</li>
+        <li>Attacker Reserve Effects (Cards with a source of 'reserves' are revealed from the hand)</li>
         <li>Attacker Hand Effects (Cards with a source of 'hand' are revealed from the hand)</li>
+        <li>Attacker Card Effects (Cards with a source of 'played' or '' when played)</li>
+        <li>Defender Player Effects</li>
+        <li>Defender Reserve Effects</li>
         <li>Defender Hand Effects</li>
-        <li>Attacker Card Effects (The final played card)</li>
         <li>Defender Card Effects</li>
     </ul>
-
     <h1>In Game Console Commands</h1>
     <table>
         <tr>
@@ -134,19 +138,33 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>MoveCardToHand</td>
-            <td>cardNumberOrName, Opponent: True or  False (default)</td>
-            <td>Move a card to the hand from anywhere</td>
-        </tr>
-        <tr>
-            <td>MoveCardToReserves</td>
-            <td>cardNumberOrName, Opponent: True or  False (default)</td>
-            <td>Move a card to the reserves from anywhere</td>
-        </tr>
-        <tr>
-            <td>MoveCardToDeck</td>
+            <td>FindCard</td>
             <td>cardNumberOrName</td>
-            <td>Move a card to the deck from anywhere</td>
+            <td>Find the location of a specific card</td>
+        </tr>
+        <tr>
+            <td>ListCards</td>
+            <td>location</td>
+            <td>List all cards in the location along with count of number of instances</td>
+        </tr>
+            <td>ListCardLocations</td>
+            <td></td>
+            <td>List all card locations and the number of cards in the location</td>
+        </tr>
+        <tr>
+            <td>MoveCard</td>
+            <td>cardNumberOrName, location</td>
+            <td>Move a card from anywhere to the destination location (e.g. @Deck)</td>
+        </tr>
+        <tr>
+            <td>PrintCard</td>
+            <td>cardNumberOrName</td>
+            <td>Print the details of the card (if there are multiple then it prints the first)</td>        
+        </tr>
+        </tr>
+            <td>SetCardValue</td>
+            <td>cardNumberOrName, stat, value</td>
+            <td>stats: type,speed,power,armor,health,vps,tags,traits,rules,sources,timing,weighting</td>
         </tr>
     </table>
 
